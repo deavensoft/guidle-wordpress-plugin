@@ -1,0 +1,11 @@
+<section>
+    {foreach $events as $event}
+        <ul>
+            <li>Album ID: {$event.albumId}</li>
+            <li>ID: {$event.id}</li>
+            <li>Title: {$event.title}</li>
+            <li><a href="{$finalWPPageUrl}{$event.id}">Details</a></li>
+            <li>Details: {$event.url}</li>
+        </ul>
+    {/foreach}
+</section>
