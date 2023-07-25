@@ -11,7 +11,8 @@ function show_guidle_events_list($attrs) {
     }
     return get_event_details(
         get_event_details_base_url($attrs),
-        $_GET['id']
+        $_GET['id'],
+        get_event_details_language($attrs)
     );
 }
 
@@ -24,9 +25,9 @@ function get_event_list_as_json($eventListUrl) {
     return json_decode($data, true);
 }
 
-function get_event_details_as_json($eventDetailsBaseUrl, $eventId) {
+function get_event_details_as_json($eventDetailsBaseUrl, $eventId, $language) {
     $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $eventDetailsBaseUrl . $eventId);
+    curl_setopt($ch, CURLOPT_URL, $eventDetailsBaseUrl . $eventId . "/" . $language);
     curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
     $data = curl_exec($ch);
     curl_close($ch);
@@ -37,7 +38,8 @@ function get_attributes($attrs) {
     $defaultAttributes = array(
         'event-list-url' => '',
         'target-wp-page-url' => '',
-        'event-details-base-url' => '',        
+        'event-details-base-url' => '',
+        'lang' => 'de'
     );
     return shortcode_atts($defaultAttributes, $attrs);
 }
@@ -54,12 +56,16 @@ function get_event_details_base_url($attrs) {
     return get_attributes($attrs)['event-details-base-url'];
 }
 
+function get_event_details_language($attrs) {
+    return get_attributes($attrs)['lang'];
+}
+
 function get_target_wp_page_url($attrs) {
     return get_attributes($attrs)['target-wp-page-url'];
 }
 
 function get_event_list($eventListUrl, $targetWPPageUrl) {
-    $eventListJson = get_event_list_as_json($eventListUrl);
+    $offerListJson = flatten_event_list(get_event_list_as_json($eventListUrl));
     $smarty = new Smarty();
     $template = GUIDLE_EVENTS_PLUGIN_PATH . 'includes/templates/event-list.html';
     $finalWPPageUrl = $targetWPPageUrl;
@@ -67,17 +73,35 @@ function get_event_list($eventListUrl, $targetWPPageUrl) {
         $finalWPPageUrl .= '&id=';
     } else {
         $finalWPPageUrl .= '?id=';
-    }
-    $smarty->assign('events', $eventListJson);
+    } 
+    $smarty->assign('offers', $offerListJson);
     $smarty->assign('finalWPPageUrl', $finalWPPageUrl);
     return $smarty->fetch($template);
 }
 
-function get_event_details($eventDetailsBaseUrl, $eventId) {
-    $eventDetailsJson = get_event_details_as_json($eventDetailsBaseUrl, $eventId);
+function get_event_details($eventDetailsBaseUrl, $eventId, $language) {
+    $offerDetailsJson = get_event_details_as_json($eventDetailsBaseUrl, $eventId, $language);
     $smarty = new Smarty();
     $template = GUIDLE_EVENTS_PLUGIN_PATH . 'includes/templates/event-details.html';
-    $smarty->assign('event', $eventDetailsJson);
+    $smarty->assign('offerDetails', $offerDetailsJson);
     return $smarty->fetch($template);
+}
+
+function flatten_event_list($original) {
+    $flattened = [];
+    foreach($original['groupSet'] as $groupSet) {
+        foreach($groupSet['offers'] as $offer) {
+            foreach($offer['offerDetail'] as $offerDetail) {
+                $tmpOffer = array(
+                    "id" => $offer['id'],
+                    "name" => $groupSet['name'],
+                    "offerDetail" => $offerDetail,
+                );
+                $flattened[] = $tmpOffer;
+                break;
+            }            
+        }
+    }
+    return $flattened;
 }
 

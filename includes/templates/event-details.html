@@ -1,8 +1,18 @@
-<section>
-    <ul>
-        <li>Album ID: {$event.albumId}</li>
-        <li>ID: {$event.id}</li>
-        <li>Title: {$event.title}</li>
-    </ul>
-    <img src="{$event.url}"/>
+<section style="font-family: Arial, Helvetica, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+    <div>
+        <img src="{$offerDetails.pictures[0].path}" style="max-width: 100%; height: auto;"/>
+    </div>
+    <div>
+        <h1>{$offerDetails.title}</h1>
+        <p style="font-size: 16px; color: #666; margin-bottom: 15px;">{$offerDetails.shortDescription}</p>
+        <p style="font-size: 18px; line-height: 1.6; margin-bottom: 20px;">
+            {$offerDetails.description}
+        </p>
+        <div style="font-size: 16px; color: #333; margin-bottom: 5px;">
+            <strong>Location:</strong> {$offerDetails.address.city} - {$offerDetails.address.location} - {$offerDetails.address.street}
+        </div>
+        <div style="font-size: 16px; color: #333; margin-bottom: 20px;">
+            <strong>Schedule:</strong> {$offerDetails.schedules}
+        </div>
+    </div>
 </section>
