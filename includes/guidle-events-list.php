@@ -17,21 +17,21 @@ function show_guidle_events_list($attrs) {
 }
 
 function get_event_list_as_json($eventListUrl) {
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $eventListUrl);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $data = curl_exec($ch);
-    curl_close($ch);
-    return json_decode($data, true);
+    $request = wp_remote_get($eventListUrl);
+    if( is_wp_error( $request ) ) {
+        return false; 
+    }
+    $body = wp_remote_retrieve_body($request);    
+    return json_decode($body, true);
 }
 
 function get_event_details_as_json($eventDetailsBaseUrl, $eventId, $language) {
-    $ch = curl_init();
-    curl_setopt($ch, CURLOPT_URL, $eventDetailsBaseUrl . $eventId . "/" . $language);
-    curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
-    $data = curl_exec($ch);
-    curl_close($ch);
-    return json_decode($data, true);
+    $request = wp_remote_get($eventDetailsBaseUrl . $eventId . "/" . $language);
+    if( is_wp_error( $request ) ) {
+        return false; 
+    }
+    $body = wp_remote_retrieve_body($request); 
+    return json_decode($body, true);
 }
 
 function get_attributes($attrs) {
@@ -80,11 +80,14 @@ function get_event_list($eventListUrl, $targetWPPageUrl) {
 }
 
 function get_event_details($eventDetailsBaseUrl, $eventId, $language) {
-    $offerDetailsJson = get_event_details_as_json($eventDetailsBaseUrl, $eventId, $language);
-    $smarty = new Smarty();
-    $template = GUIDLE_EVENTS_PLUGIN_PATH . 'includes/templates/event-details.html';
-    $smarty->assign('offerDetails', $offerDetailsJson);
-    return $smarty->fetch($template);
+    if($eventId) {
+        $offerDetailsJson = get_event_details_as_json($eventDetailsBaseUrl, $eventId, $language);
+        $smarty = new Smarty();
+        $template = GUIDLE_EVENTS_PLUGIN_PATH . 'includes/templates/event-details.html';
+        $smarty->assign('offerDetails', $offerDetailsJson);
+        return $smarty->fetch($template);
+    }
+    return false
 }
 
 function flatten_event_list($original) {

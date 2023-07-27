@@ -21,6 +21,16 @@
             include_once GUIDLE_EVENTS_PLUGIN_PATH . 'includes/utilities.php';
             // include_once GUIDLE_EVENTS_PLUGIN_PATH . 'includes/options-page.php';
             include_once GUIDLE_EVENTS_PLUGIN_PATH . 'includes/guidle-events-list.php';
+
+            add_action('init', 'register_style');
+            function register_style() {
+                wp_register_style( 'guidle_style', plugins_url('/css/guidle-events.css', __FILE__), false, '1.0.0', 'all');
+            }
+
+            add_action('wp_enqueue_scripts', 'enqueue_guidle_style');
+            function enqueue_guidle_style(){
+                wp_enqueue_style( 'guidle_style' );
+            } 
         }
 
     }
