@@ -1,15 +1,13 @@
 <section id="guidle-events-list">
     {foreach $offers as $offer}
-        <div style="display: flex; align-items: flex-start; margin-bottom: 20px;">
-            <div style="flex: 0 0 100px; margin-right: 10px; overflow: hidden; height: 150px;">
-                <img src="{$offer.offerDetail.images[0].thumbnailUrl}" style="width: 100%; height: 130px;"/>
+        <div class="guidle-event-item">
+            <div class="guidle-event-item__image">
+                <img src="{$offer.offerDetail.images[0].size[2].url}" />
             </div>
-            <div style="flex: 1;">
-                <div style="font-size: 12px; color: #666; margin-bottom: 5px;">
-                    {$offer.name}
-                </div>
-                <div style="font-size: 18px; font-weight: bold; margin-top: 0px; margin-bottom: 5px;">
-                    <a href="{$finalWPPageUrl}{$offer.id}">{$offer.offerDetail.title}</a>
+            <div class="guidle-event-item__description">
+                <time>{$offer.name}</time>
+                <div class="guidle-event-item__link">
+                    <a href="{$finalWPPageUrl}{$offer.id}"><h3>{$offer.offerDetail.title}</h3></a>
                 </div>
                 <div style="font-size: 14px;">{$offer.offerDetail.shortDescription}</div>
             </div>

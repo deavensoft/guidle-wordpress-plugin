@@ -9,11 +9,14 @@ function show_guidle_events_list($attrs) {
             get_target_wp_page_url(($attrs))
         );
     }
-    return get_event_details(
-        get_event_details_base_url($attrs),
-        $_GET['id'],
-        get_event_details_language($attrs)
-    );
+    if(isset($_GET['id'])) {
+        return get_event_details(
+            get_event_details_base_url($attrs),
+            $_GET['id'],
+            get_event_details_language($attrs)
+        );
+    }
+    return false;
 }
 
 function get_event_list_as_json($eventListUrl) {
@@ -87,7 +90,7 @@ function get_event_details($eventDetailsBaseUrl, $eventId, $language) {
         $smarty->assign('offerDetails', $offerDetailsJson);
         return $smarty->fetch($template);
     }
-    return false
+    return false;
 }
 
 function flatten_event_list($original) {

@@ -7,9 +7,12 @@
         <p style="font-size: 16px; color: #666; margin-bottom: 15px;">{$offerDetails.shortDescription}</p>
         <p style="font-size: 18px; line-height: 1.6; margin-bottom: 20px;">
             {$offerDetails.description}
-        </p>
+        </p>           
         <div style="font-size: 16px; color: #333; margin-bottom: 5px;">
-            <strong>Location:</strong> {$offerDetails.address.city} - {$offerDetails.address.location} - {$offerDetails.address.street}
+            <strong>Location:</strong> 
+            {if isset($offerDetails.address.city)}{$offerDetails.address.city}{/if} 
+            {if isset($offerDetails.address.location)}- {$offerDetails.address.location}{/if} 
+            {if isset($offerDetails.address.street)} - {$offerDetails.address.street}{/if}
         </div>
         <div style="font-size: 16px; color: #333; margin-bottom: 20px;">
             <strong>Schedule:</strong> {$offerDetails.schedules}
