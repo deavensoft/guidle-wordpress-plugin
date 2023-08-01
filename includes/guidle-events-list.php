@@ -95,24 +95,27 @@ function get_event_details($eventDetailsBaseUrl, $eventId, $language) {
 
 function flatten_event_list($original) {
     $flattened = [];
-    foreach($original['groupSet'] as $groupSet) {
-        foreach($groupSet['offers'] as $offer) {
-            foreach($offer['offerDetail'] as $offerDetail) {
-                $tmpOffer = array(
-                    "id" => $offer['id'],
-                    "date" => array(
-                        "fullDate" => $groupSet['name'],
-                        "day" => date_i18n('j', strtotime($groupSet['name'])),
-                        "month" => date_i18n('F', strtotime($groupSet['name'])),
-                        "weekDay" => date_i18n('l', strtotime($groupSet['name'])),
-                    ),
-                    "offerDetail" => $offerDetail,
-                );
-                $flattened[] = $tmpOffer;
-                break;
-            }            
+    if($original) {
+        foreach($original['groupSet'] as $groupSet) {
+            foreach($groupSet['offers'] as $offer) {
+                foreach($offer['offerDetail'] as $offerDetail) {
+                    $tmpOffer = array(
+                        "id" => $offer['id'],
+                        "date" => array(
+                            "fullDate" => $groupSet['name'],
+                            "day" => date_i18n('j', strtotime($groupSet['name'])),
+                            "month" => date_i18n('F', strtotime($groupSet['name'])),
+                            "weekDay" => date_i18n('l', strtotime($groupSet['name'])),
+                        ),
+                        "offerDetail" => $offerDetail,
+                    );
+                    $flattened[] = $tmpOffer;
+                    break;
+                }            
+            }
         }
+        return $flattened;
     }
-    return $flattened;
+    return false;
 }
 
