@@ -102,9 +102,9 @@ function flatten_event_list($original) {
                     "id" => $offer['id'],
                     "date" => array(
                         "fullDate" => $groupSet['name'],
-                        "day" => date('j', strtotime($groupSet['name'])),
-                        "month" => date('F', strtotime($groupSet['name'])),
-                        "weekDay" => date('l', strtotime($groupSet['name'])),
+                        "day" => date_i18n('j', strtotime($groupSet['name'])),
+                        "month" => date_i18n('F', strtotime($groupSet['name'])),
+                        "weekDay" => date_i18n('l', strtotime($groupSet['name'])),
                     ),
                     "offerDetail" => $offerDetail,
                 );
