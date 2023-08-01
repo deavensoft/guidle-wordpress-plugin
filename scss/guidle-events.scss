@@ -1,0 +1,103 @@
+#guidle-events-list {
+    background-color: #fff;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    .guidle-event-item {
+        display: flex; 
+        align-items: flex-start;
+        gap: 20px;
+        text-decoration: none;
+        background-color: #fff;
+        @media screen and (max-width: 480px){
+            gap: 10px;
+        }
+        &:hover {
+            .guidle-event-item__image {
+                .date-wrap {
+                    left: -200px;
+                    transition: 0.2s ease-in;
+                }
+            }
+            .guidle-event-item__description  {
+                .guidle-event-item__link {
+                    h3 {
+                        color: #d4005a;
+                    }
+                }
+            }
+            
+        }
+        .guidle-event-item__image {
+            flex: 0 0 200px; 
+            overflow: hidden; 
+            height: 200px;
+            position: relative;
+            @media screen and (max-width: 480px){
+                flex: 0 0 100px;
+                height: 100px;
+                width: 100px;
+            }
+            img {
+                width: 100%; height: 100%;
+                object-fit: cover;
+                @media screen and (max-width: 480px){
+                    height: 100px;
+                }
+            }
+            .date-wrap {
+                position: absolute;
+                top: 0;
+                width: 100%;
+                height: 100%;
+                left: 0px;
+                transition: 0.2s ease-in;
+                background-color: rgba(45,45,45,.66);
+                color: #fff;
+                font-family: Gotham XNarrow SSm A,Gotham XNarrow SSm B,Arial Condensed,Arial,sans-serif;
+                time {
+                    width: 100%;
+                    height: 100%;
+                    align-items: center;
+                    display: flex;
+                    flex-direction: column;
+                    justify-content: center;
+                    text-align: center;
+                    gap: 10px;
+                    @media screen and (max-width: 480px){
+                        gap: 4px;
+                    }                    
+                    .day {
+                        line-height: 100%;
+                        font-size: 5.75rem;
+                        @media screen and (max-width: 480px){
+                            font-size: 3.25rem;
+                        }
+                    }
+                    .month, .weekday {
+                        font-size: 1.25rem;
+                        font-weight: 500;
+                        line-height: 100%;
+                        @media screen and (max-width: 480px){
+                            font-size: 1rem;
+                        }
+                    }
+                }
+            }
+        }
+        .guidle-event-item__description {
+            display: flex;
+            flex-direction: column;
+            .guidle-event-item__link {
+                font-size: 18px; font-weight: bold; margin-top: 0px; margin-bottom: 5px;
+                text-decoration: none;
+                h3 {
+                    margin: 0px;
+                    font-size: 1.125rem;
+                    color: #00a5dd;
+                }
+            }
+            
+        }
+    }
+}

@@ -100,7 +100,12 @@ function flatten_event_list($original) {
             foreach($offer['offerDetail'] as $offerDetail) {
                 $tmpOffer = array(
                     "id" => $offer['id'],
-                    "name" => $groupSet['name'],
+                    "date" => array(
+                        "fullDate" => $groupSet['name'],
+                        "day" => date('j', strtotime($groupSet['name'])),
+                        "month" => date('F', strtotime($groupSet['name'])),
+                        "weekDay" => date('l', strtotime($groupSet['name'])),
+                    ),
                     "offerDetail" => $offerDetail,
                 );
                 $flattened[] = $tmpOffer;

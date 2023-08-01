@@ -1,16 +1,22 @@
 <section id="guidle-events-list">
     {foreach $offers as $offer}
-        <div class="guidle-event-item">
+        <a href="{$finalWPPageUrl}{$offer.id}" class="guidle-event-item">
             <div class="guidle-event-item__image">
                 <img src="{$offer.offerDetail.images[0].size[2].url}" />
+                <div class="date-wrap">
+                    <time datetime="{$offer.date.fullDate}">
+                        <span class="day">{$offer.date.day}</span>
+                        <span class="month">{$offer.date.month}</span>
+                        <span class="weekday">{$offer.date.weekDay}</span>
+                    </time>
+                </div>
             </div>
             <div class="guidle-event-item__description">
-                <time>{$offer.name}</time>
                 <div class="guidle-event-item__link">
-                    <a href="{$finalWPPageUrl}{$offer.id}"><h3>{$offer.offerDetail.title}</h3></a>
+                    <h3>{$offer.offerDetail.title}</h3>
                 </div>
                 <div style="font-size: 14px;">{$offer.offerDetail.shortDescription}</div>
             </div>
-        </div>
+        </a>
     {/foreach}
 </section>
