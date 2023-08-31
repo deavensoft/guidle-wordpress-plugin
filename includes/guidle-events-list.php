@@ -4,7 +4,7 @@ add_shortcode('guidle-events-list', 'show_guidle_events_list');
 
 function show_guidle_events_list($attrs) {
     if (is_list($attrs)) {
-        return get_event_list(
+        return get_event_list_v2(
             get_event_list_url($attrs),
             get_target_wp_page_url(($attrs))
         );
@@ -82,6 +82,21 @@ function get_event_list($eventListUrl, $targetWPPageUrl) {
     return $smarty->fetch($template);
 }
 
+function get_event_list_v2($eventListUrl, $targetWPPageUrl) {
+    $offerListJson = reorganize_event_list(get_event_list_as_json($eventListUrl));
+    $smarty = new Smarty();
+    $template = GUIDLE_EVENTS_PLUGIN_PATH . 'includes/templates/event-list.html';
+    $finalWPPageUrl = $targetWPPageUrl;
+    if (str_contains($targetWPPageUrl, "?")) {
+        $finalWPPageUrl .= '&id=';
+    } else {
+        $finalWPPageUrl .= '?id=';
+    }
+    $smarty->assign('groupSets', $offerListJson);
+    $smarty->assign('finalWPPageUrl', $finalWPPageUrl);
+    return $smarty->fetch($template);
+}
+
 function get_event_details($eventDetailsBaseUrl, $eventId, $language) {
     if($eventId) {
         $offerDetailsJson = get_event_details_as_json($eventDetailsBaseUrl, $eventId, $language);
@@ -89,6 +104,36 @@ function get_event_details($eventDetailsBaseUrl, $eventId, $language) {
         $template = GUIDLE_EVENTS_PLUGIN_PATH . 'includes/templates/event-details.html';
         $smarty->assign('offerDetails', $offerDetailsJson);
         return $smarty->fetch($template);
+    }
+    return false;
+}
+
+function reorganize_event_list($original) {
+    $reorganized = [];
+    if ($original) {
+        foreach($original['groupSet'] as $groupSet) {
+            $tmpGroupSet = array(
+                "fullDate" => $groupSet['name'],
+                "day" => date_i18n('j', strtotime($groupSet['name'])),
+                "month" => date_i18n('F', strtotime($groupSet['name'])),
+                "weekDay" => date_i18n('l', strtotime($groupSet['name'])),
+                "offers" => array()
+            );
+            foreach($groupSet['offers'] as $offer) {
+                foreach($offer['offerDetail'] as $offerDetail) {
+                    $tmpOffer = array(
+                        "id" => $offer['id'],
+                        "offerDetail" => $offerDetail,
+                        "city" => $offer['address']['city'],
+                        "startTime" => $offer['schedules']['dates'][0]['startTime']
+                    );
+                    $tmpGroupSet['offers'][] = $tmpOffer;
+                }
+                $reorganized[] = $tmpGroupSet;
+                break;
+            }
+        }
+        return $reorganized;
     }
     return false;
 }

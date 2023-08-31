@@ -22,15 +22,17 @@
             // include_once GUIDLE_EVENTS_PLUGIN_PATH . 'includes/options-page.php';
             include_once GUIDLE_EVENTS_PLUGIN_PATH . 'includes/guidle-events-list.php';
 
-            add_action('init', 'register_style');
-            function register_style() {
-                wp_register_style( 'guidle_style', plugins_url('/css/guidle-events.css', __FILE__), false, '1.0.0', 'all');
-            }
+            // add_action('init', 'register_style', 999);
+            // function register_style() {
+            //     // wp_register_style( 'guidle_style', plugins_url('/css/guidle-events.css', __FILE__), false, '1.0.0', 'all');
+            //     wp_register_style( 'guidle_style', plugins_url('/css/gdl-list.css', __FILE__), false, '1.0.0', 'all');
+            // }
 
-            add_action('wp_enqueue_scripts', 'enqueue_guidle_style');
+            add_action('wp_enqueue_scripts', 'enqueue_guidle_style', 999);
             function enqueue_guidle_style(){
+                wp_register_style( 'guidle_style', plugins_url('/css/gdl-list.css', __FILE__), true, '1.0.0', 'all');
                 wp_enqueue_style( 'guidle_style' );
-            } 
+            }
 
             function create_block_guidle_events_block_init() {
                 register_block_type( __DIR__ . '/build' );

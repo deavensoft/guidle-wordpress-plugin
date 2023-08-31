@@ -1,4 +1,5 @@
 <section style="font-family: Arial, Helvetica, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
+    <a onclick="history.back()">Back</a>
     <div>
         <img src="{$offerDetails.pictures[0].path}" style="max-width: 100%; height: auto;"/>
     </div>
@@ -7,15 +8,55 @@
         <p style="font-size: 16px; color: #666; margin-bottom: 15px;">{$offerDetails.shortDescription}</p>
         <p style="font-size: 18px; line-height: 1.6; margin-bottom: 20px;">
             {$offerDetails.description}
-        </p>           
-        <div style="font-size: 16px; color: #333; margin-bottom: 5px;">
-            <strong>Location:</strong> 
-            {if isset($offerDetails.address.city)}{$offerDetails.address.city}{/if} 
-            {if isset($offerDetails.address.location)}- {$offerDetails.address.location}{/if} 
-            {if isset($offerDetails.address.street)} - {$offerDetails.address.street}{/if}
-        </div>
-        <div style="font-size: 16px; color: #333; margin-bottom: 20px;">
-            <strong>Schedule:</strong> {$offerDetails.schedules}
+        </p>
+        <div class="gdl-data">
+            <div class="gdl-schedule">
+                <div style="font-size: 16px; color: #333; margin-bottom: 20px;">
+                    <strong>Schedule:</strong> {$offerDetails.schedules}
+                </div>
+            </div>
+            <div class="gdl-location">
+                <div style="font-size: 16px; color: #333; margin-bottom: 5px;">
+                    <strong>Location:</strong> 
+                    {if isset($offerDetails.address.zip)}{$offerDetails.address.zip}{/if}
+                    {if isset($offerDetails.address.city)}{$offerDetails.address.city}{/if} 
+                    {if isset($offerDetails.address.location)}- {$offerDetails.address.location}{/if} 
+                    {if isset($offerDetails.address.street)} - {$offerDetails.address.street}{/if}
+                    <iframe 
+                        src="https://maps.google.com/maps?q={$offerDetails.address.lat},{$offerDetails.address.lng}&hl=es;z=14&amp;output=embed"
+                        height="600px"
+                        width="600px">
+                    </iframe>
+                </div>
+            </div>
+            <div class="gdl-contact">
+                <strong>Contact: </strong>
+                {if isset($offerDetails.contact.telephone)}{$offerDetails.contact.telephone}{/if}
+                {if isset($offerDetails.contact.email)}{$offerDetails.contact.email}{/if}
+            </div>
+            <div class="gdl-homepage">
+                <strong>Link: </strong>
+                {if isset($offerDetails.homepage)}{$offerDetails.homepage}{/if}
+            </div>
+            <div class="gdl-tags">
+                {foreach $offerDetails.tags as $tag name=item}
+                    {if isset($tag.tree)}
+                        <strong>{$tag.tree}:</strong>
+                        {foreach from=$tag.tagList item=tagItem name=i}
+                            {$tagItem.name}
+                            {if $smarty.foreach.i.last}
+                            {else}
+                                -
+                            {/if}
+                        {/foreach}
+                    {/if}
+                {/foreach}
+            </div>
+            <div class="gdl-webcode">
+                {if isset($offerDetails.generatedId) }
+                    <strong>WEBCODE: </strong>www.guidle.com/{$offerDetails.generatedId}
+                {/if}
+            </div>
         </div>
     </div>
 </section>

@@ -1,0 +1,173 @@
+@import url('https://fonts.googleapis.com/css2?family=Noto+Sans&family=Roboto&family=Ubuntu&display=swap');
+
+.gdl-section {
+    width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    /* font-family: "Roboto", sans-serif; */
+    /* font-size: 16px; */
+}
+
+/* body {
+    margin: 0 auto;
+    width: 1200px;
+} */
+
+.gdl-container {
+    display: flex;
+    flex-wrap: wrap;
+    font-family: "Roboto", sans-serif;
+    font-size: 2rem;
+}
+
+.gdl-topbar {
+    display: none;
+    background-color: #836096;
+    height: 3rem;
+    text-transform: uppercase;
+    color: whitesmoke;
+    text-align: center;
+    font-family: "Roboto", sans-serif;
+}
+
+.gdl-filter {
+    display: none;
+    width: 300px;
+    background-color: #EBE76C;
+    text-transform: uppercase;
+    color: #0c2231;
+    text-align: center;
+    padding-top: calc((100vh - 3rem) / 2 - 2rem);
+}
+
+.gdl-content {
+    flex: 1;
+    width: auto;
+    background-color: #F0B86E;
+    min-height: calc(100vh - 3rem);
+    text-transform: uppercase;
+    color: #0c2231;
+    /* text-align: center; */
+    padding-top: 10px;
+    padding-left: 10px;
+    padding-right: 10px;
+}
+
+.gdl-event-group {
+    background-color: #ED7B7B;
+    margin-bottom: 1rem;
+}
+
+.gdl-event-list {
+    /* display: flex; */
+}
+
+.gdl-group-name {
+    font-family: "Roboto", sans-serif;
+    background-color: aquamarine;
+    width: 150px;
+    height: 150px;
+    text-align: center;
+    margin-bottom: 0.25rem;
+}
+
+.gdl-group-name .gdl-date {
+    font-size: 4.5rem;
+    font-weight: bold;
+    line-height: 1.1;
+    /* margin-bottom: 5px; */
+}
+
+.gdl-group-name .gdl-month {
+    font-size: 0.6rem;
+    /* margin-top: 0;
+    margin-bottom: 5px; */
+}
+
+.gdl-group-name .gdl-day {
+    font-size: 0.6rem;
+    /* margin-top: 0; */
+}
+
+.gdl-event {
+    display: flex;
+    margin-bottom: 0.25rem;
+}
+
+.gdl-img-wrap {
+    margin-right: 10px;
+    position: relative;
+    width: 150px;
+    height: 150px;
+    color: whitesmoke;
+    text-align: center;
+    background-color: blue;
+}
+
+.gdl-event p {
+    display: block;
+}
+
+.gdl-offer-type {
+    font-size: 0.5rem;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.gdl-title {
+    font-size: 0.7rem;
+    font-weight: bold;
+    margin-top: 5px;
+}
+
+.gdl-location {
+    font-size: 0.6rem;
+    margin-top: 5px;
+}
+
+.gdl-time {
+    font-size: 0.6rem;
+    margin-top: 5px;
+}
+
+@media (max-width: 1200px) {
+    .gdl-group-name {
+        padding-top: 5px;
+        padding-bottom: 5px;
+        padding-left: 5px;
+        display: flex;
+        height: auto;
+        width: 100%;
+        text-align: left;
+    }
+
+    .gdl-group-name .gdl-date {
+        padding-right: 10px;
+        font-size: 0.6rem;
+        font-weight: bold;
+        line-height: 1.1;
+    }
+    
+    .gdl-group-name .gdl-month {
+        padding-right: 10px;
+        font-size: 0.6rem;
+    }
+    
+    .gdl-group-name .gdl-day {
+        font-size: 0.6rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    .gdl-container {
+        flex-direction: column;
+    }
+    .gdl-content, .gdl-topbar, .gdl-filter {
+        width: 100vw;
+    }
+    .gdl-filter {
+        width: 100vw;
+        padding: 0;
+    }
+}

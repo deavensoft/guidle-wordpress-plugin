@@ -1,22 +1,40 @@
-<section id="guidle-events-list">
-    {foreach $offers as $offer}
-        <a href="{$finalWPPageUrl}{$offer.id}" class="guidle-event-item">
-            <div class="guidle-event-item__image">
-                <img src="{$offer.offerDetail.images[0].size[2].url}" />
-                <div class="date-wrap">
-                    <time datetime="{$offer.date.fullDate}">
-                        <span class="day">{$offer.date.day}</span>
-                        <span class="month">{$offer.date.month}</span>
-                        <span class="weekday">{$offer.date.weekDay}</span>
-                    </time>
+<section class="gdl-section" id="gdl-section">
+    <div class="gld-topbar">
+        <p>Top bar</p>
+    </div>
+    <div class="gdl-container" id="gdl-container">
+        <div class="gdl-filter">
+            <p>Filter</p>
+        </div>
+        <div class="gdl-content">
+            {foreach $groupSets as $groupSet}
+                <div class="gdl-event-group">
+                    <div class="gdl-group-name">
+                        <p class="gdl-date">{$groupSet.day}</p>
+                        <p class="gdl-month">{$groupSet.month}</p>
+                        <p class="gdl-day">{$groupSet.weekDay}</p>              
+                    </div>
+                    <div class="gdl-event-list">
+                        <!-- {if isset($groupSet.offers) } -->
+                            {foreach $groupSet.offers as $offer}
+                            <a href="{$finalWPPageUrl}{$offer.id}">
+                                <div class="gdl-event">
+                                    <div class="gdl-img-wrap">
+                                        <img src="{$offer.offerDetail.images[0].size[2].url}" width="150" height="150"/>
+                                    </div>
+                                    <div class="gdl-event-data">
+                                        <p class="gdl-offer-type">Veranstaltungen</p>
+                                        <p class="gdl-title">{$offer.offerDetail.title}</p>
+                                        <p class="gdl-location">{$offer.city}</p>
+                                        <p class="gdl-time">{$offer.startTime}</p>
+                                    </div>
+                                </div>                                
+                            </a>
+                            {/foreach}
+                        <!-- {/if}                     -->
+                    </div>
                 </div>
-            </div>
-            <div class="guidle-event-item__description">
-                <div class="guidle-event-item__link">
-                    <h3>{$offer.offerDetail.title}</h3>
-                </div>
-                <div style="font-size: 14px;">{$offer.offerDetail.shortDescription}</div>
-            </div>
-        </a>
-    {/foreach}
+            {/foreach}
+        </div>
+    </div>
 </section>
